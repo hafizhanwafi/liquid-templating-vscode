@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+        "template",
+        "data"
+    ],
+    "properties": {
+        "template": {
+            "type": "string",
+            "description": "Path ke file template Liquid",
+            "pattern": ".+"
+        },
+        "output": {
+            "type": "string",
+            "description": "Path ke file output (opsional)"
+        },
+        "data": {
+            "type": "object",
+            "description": "Data yang digunakan untuk render"
+        }
+    }
+}

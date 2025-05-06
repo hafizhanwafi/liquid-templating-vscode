@@ -1,0 +1,53 @@
+{
+    "name": "liquid-templating",
+    "displayName": "Liquid Templating",
+    "description": "",
+    "version": "0.0.1",
+    "author": {
+        "name": "Hafizhan Al Wafi",
+        "email": "hafizhanwafi@gmail.com",
+        "url": "https://github.com/hafizhanwafi"
+    },
+    "publisher": "hafizhan",
+    "engines": {
+        "vscode": "^1.99.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished",
+        "onLanguage:json"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "jsonValidation": [
+            {
+                "fileMatch": [
+                    "*.liquid-data.json"
+                ],
+                "url": "./schema/liquid-data-schema.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src",
+        "test": "vscode-test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^10.0.10",
+        "@types/node": "20.x",
+        "@types/vscode": "^1.99.0",
+        "@typescript-eslint/eslint-plugin": "^8.31.1",
+        "@typescript-eslint/parser": "^8.31.1",
+        "@vscode/test-cli": "^0.0.10",
+        "@vscode/test-electron": "^2.5.2",
+        "eslint": "^9.25.1",
+        "liquidjs": "^10.21.0",
+        "typescript": "^5.8.3"
+    }
+}
