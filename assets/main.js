@@ -4,7 +4,7 @@ let viewData;
 
 window.addEventListener('message', event => {
     viewData = event.data;
-    const { templateName, templatePath, dataName, output, outputName, language } = event.data;
+    const { templateName, templatePath, dataName, output, outputName, language, outputPath } = event.data;
 
     code.innerHTML = "<!-- -->" + escapeHtml(output) + "<!-- -->";
     code.className = "language-" + (language || "plaintext");
@@ -13,7 +13,7 @@ window.addEventListener('message', event => {
     linkData.innerHTML = dataName;
     linkData.setAttribute("title", "Open file: " + templatePath);
     linkOutput.innerHTML = outputName;
-    linkOutput.setAttribute("title", "Open file: " + templatePath);
+    linkOutput.setAttribute("title", "Open file: " + outputPath);
     toolbarText.innerHTML = language;
 
     Prism.highlightAll();
@@ -56,7 +56,16 @@ linkOutput.addEventListener("click", () => {
 });
 
 document.querySelector(".copy-button").addEventListener("click", (e) => {
-    navigator.clipboard.writeText(viewData.output);
+    const button = e.target;
+    navigator.clipboard.writeText(viewData.output).then(() => {
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = "Copied";
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+        }, 2000);
+    });
 });
 
 document.querySelector("#link-save").addEventListener("click", () => {

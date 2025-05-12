@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export interface IWebviewMessage {
+export interface IWebviewPostMessage {
     templateName: string;
     templatePath: string;
     dataName: string;
@@ -15,33 +15,39 @@ export class RenderPreviewPanel {
     panel: vscode.WebviewPanel | undefined;
 
     constructor(private context: vscode.ExtensionContext) { }
+    
+    onDidReceiveMessage: ((msg: any) => void) | undefined;
+    onDidDispose: (() => void) | undefined;
 
-    onPanelCreated: ((panel: vscode.WebviewPanel) => void) | undefined;
     reveal() {
         if (this.panel) {
+            if (this.panel.visible) return;
             this.panel.reveal(vscode.ViewColumn.Beside, true);
         } else {
             this.panel = vscode.window.createWebviewPanel(
-                'liquidRenderPreview',
-                'Liquid Render Preview',
+                'liquid-templating-preview',
+                'Preview',
                 { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
                 {
                     enableScripts: true,
                     retainContextWhenHidden: true,
-                    localResourceRoots: [vscode.Uri.joinPath(this.context.extensionUri, 'assets')]
+                    localResourceRoots: [vscode.Uri.joinPath(this.context.extensionUri, 'assets')],
                 }
             );
 
-            this.onPanelCreated && this.onPanelCreated(this.panel);
-
+            this.panel.webview.onDidReceiveMessage((msg) => this.onDidReceiveMessage?.(msg));
             this.panel.webview.html = this.getHtml(this.panel.webview);
-            this.panel.onDidDispose(() => (this.panel = undefined));
+            this.panel.onDidDispose(() => {
+                this.panel = undefined;
+                this.onDidDispose?.();
+            });
         }
     }
 
-    postRenderMessage(data: IWebviewMessage) {
-        this.reveal();
-        this.panel?.webview.postMessage({ type: 'render', ...data });
+    postRenderMessage(data: IWebviewPostMessage) {
+        if (!this.panel) return;
+        this.panel.title = `Preview ${data.templateName} + ${data.dataName}`;
+        this.panel.webview.postMessage({ type: 'render', ...data });
     }
 
     private getHtml(webview: vscode.Webview): string {

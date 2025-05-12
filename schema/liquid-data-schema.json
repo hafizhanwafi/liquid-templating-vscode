@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
+    "title": "liquid-data.json",
     "required": [
         "template",
         "data"
@@ -8,16 +9,63 @@
     "properties": {
         "template": {
             "type": "string",
-            "description": "Path ke file template Liquid",
-            "pattern": ".+"
+            "description": "Path to '.liquid-template.' file. e.g., ./some-template.liquid-template.html",
+            "pattern": "^.*\\/.*\\.liquid-template\\..*$",
+            "errorMessage": {
+                "pattern": "The 'template' field must be a valid path contains *.liquid-template.*",
+                "type": "The 'template' field must be a string"
+            }
         },
         "output": {
             "type": "string",
-            "description": "Path ke file output (opsional)"
+            "description": "Path to output file (optional)",
+            "errorMessage": {
+                "type": "The 'output' field must be a string"
+            }
         },
         "data": {
+            "anyOf": [
+                {
+                    "type": "object"
+                },
+                {
+                    "type": "array"
+                }
+            ],
+            "description": "Data used for rendering (can be object or array)",
+            "errorMessage": {
+                "anyOf": "The 'data' field must be an object or an array"
+            }
+        },
+        "dataGenerator": {
             "type": "object",
-            "description": "Data yang digunakan untuk render"
+            "required": [
+                "type",
+                "src"
+            ],
+            "properties": {
+                "src": {
+                    "type": "string",
+                    "pattern": "^.*\\/.*\\.liquid-data-src\\.js$",
+                    "errorMessage": {
+                        "pattern": "The 'dataGenerator.src' field must be a path ending in .liquid-data-src.js",
+                        "type": "The 'dataGenerator.src' field must be a string"
+                    }
+                }
+            },
+            "errorMessage": {
+                "required": {
+                    "type": "The 'dataGenerator.type' field is required",
+                    "src": "The 'dataGenerator.src' field is required"
+                },
+                "type": "The 'dataGenerator' field must be an object"
+            }
+        }
+    },
+    "errorMessage": {
+        "required": {
+            "template": "The 'template' field is required",
+            "data": "The 'data' field is required"
         }
     }
 }

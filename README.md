@@ -1,87 +1,37 @@
-# NW Templating
+# Liquid Templating for VSCode
 
-NW Templating adalah extension Visual Studio Code yang dirancang untuk mempermudah pengelolaan dan rendering file template berbasis Liquid. Extension ini mendukung validasi file JSON yang terhubung dengan template Liquid, preview hasil rendering secara langsung di webview, serta fitur seperti penyimpanan output, navigasi cepat ke file template dan data, serta mode pemantauan perubahan file dengan debounce untuk efisiensi.
+**Liquid Templating** is a Visual Studio Code extension that allows you to render templates using the [Liquid](https://shopify.github.io/liquid/) templating engine and JSON-based data sources. It also supports dynamic data generation using JavaScript and integration with Microsoft SQL Server.
 
----
+![Demo](https://raw.githubusercontent.com/hafizhanwafi/liquid-templating/refs/heads/main/media/demo.gif)
 
-## Fitur
+## Features
 
-- **Validasi File JSON**  
-  Validasi otomatis untuk file `*.liquid-data.json` menggunakan skema JSON yang telah ditentukan.
+- Render `.liquid-template.*` files using data from `.liquid-data.json`.
+- Define your data statically or dynamically using a generator script.
+- Fetch data from SQL Server databases using a JavaScript data source file (`*.liquid-data-src.js`).
+- Integrated CodeLens for easy actions:
+  - ▶ Render: Render your template to the output file.
+  - ▶ Fetch: Fetch data from the database and update the JSON data.
+  - ▶ Watch: Watch for file changes and automatically re-render.
+- **Live Preview**: View rendered templates in real-time as you edit your data or template.
 
-- **Preview Template**  
-  Preview hasil rendering template Liquid di panel webview.
+## Commands
 
-- **Navigasi Cepat**  
-  Navigasi langsung ke file template dan data melalui tautan interaktif di webview.
+The following commands are available in the extension:
 
-- **Penyimpanan Output**  
-  Simpan hasil rendering ke file output dengan mudah.
+- `Liquid Templating: Render`: Render the template to the output file.
+- `Liquid Templating: Render and Watch`: Render the template and watch for changes to automatically re-render.
 
-- **Mode Pemantauan**  
-  Pantau perubahan file dengan debounce untuk mencegah pemrosesan berulang.
+## Getting Started
 
-- **Highlight Syntax**  
-  Mendukung highlight syntax menggunakan Prism.js untuk berbagai bahasa.
-
----
-
-## Cara Menggunakan
-
-1. **Buka File JSON**  
-   Buka file `*.liquid-data.json` di Visual Studio Code.
-
-2. **Preview Template**  
-   Klik tombol **Preview** untuk melihat hasil rendering template.
-
-3. **Navigasi ke File**  
-   Klik tautan pada template atau data untuk membuka file terkait.
-
-4. **Simpan Output**  
-   Klik tombol **Save** untuk menyimpan hasil rendering ke file output.
-
-5. **Mode Pemantauan**  
-   Aktifkan mode pemantauan untuk memproses perubahan file secara otomatis.
-
----
-
-## Persyaratan
-
-- Visual Studio Code versi `^1.99.0` atau lebih baru.
-- File template berbasis Liquid dan file JSON yang sesuai.
-
----
-
-## Pengaturan Extension
-
-Extension ini tidak memiliki pengaturan tambahan. Namun, Anda dapat menyesuaikan skema JSON untuk validasi file `*.liquid-data.json`.
-
----
-
-## Masalah yang Diketahui
-
-- Tidak ada masalah yang diketahui saat ini. Jika Anda menemukan bug, silakan laporkan melalui [GitHub Issues](https://github.com/username/repository/issues).
-
----
-
-## Catatan Rilis
-
-### 0.0.1
-
-- Rilis awal dengan fitur:
-  - Validasi file JSON.
-  - Preview hasil rendering template.
-  - Navigasi cepat ke file template dan data.
-  - Penyimpanan hasil rendering.
-
----
-
-## Kontribusi
-
-Kontribusi sangat diterima! Jika Anda ingin menambahkan fitur atau memperbaiki bug, silakan buat pull request di [GitHub Repository](https://github.com/username/repository).
-
----
-
-## Lisensi
-
-Extension ini dilisensikan di bawah [MIT License](https://opensource.org/licenses/MIT).
+1. Create a `.liquid-template.*` file as your template.
+2. Create a `.liquid-data.json` file to define:
+   ```json
+   {
+     "template": "./your-template.liquid-template.txt",
+     "output": "./output.txt",
+     "data": {},
+     "dataGenerator": {
+       "src": "./your-generator.liquid-data-src.js"
+     }
+   }

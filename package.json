@@ -1,8 +1,8 @@
 {
     "name": "liquid-templating",
     "displayName": "Liquid Templating",
-    "description": "",
-    "version": "0.0.1",
+    "description": "A VSCode extension for rendering templates using Liquid and external JSON data, with support for database queries and dynamic data sources.",
+    "version": "1.0.0",
     "author": {
         "name": "Hafizhan Al Wafi",
         "email": "hafizhanwafi@gmail.com",
@@ -12,15 +12,30 @@
     "engines": {
         "vscode": "^1.99.0"
     },
+    "repository": {
+        "url": "https://github.com/hafizhanwafi/liquid-templating"
+    },
     "categories": [
-        "Other"
+        "Other",
+        "Snippets",
+        "Data Science"
     ],
+    "icon": "images/liquid-templating-128x128.png",
     "activationEvents": [
-        "onStartupFinished",
-        "onLanguage:json"
+        "onStartupFinished"
     ],
-    "main": "./out/extension.js",
+    "main": "./dist/extension.js",
     "contributes": {
+        "commands": [
+            {
+                "command": "liquid.commands.render",
+                "title": "Liquid Templating: Render"
+            },
+            {
+                "command": "liquid.commands.renderAndWatch",
+                "title": "Liquid Templating: Render and Watch"
+            }
+        ],
         "jsonValidation": [
             {
                 "fileMatch": [
@@ -30,24 +45,49 @@
             }
         ]
     },
+    "keywords": [
+        "liquid",
+        "templating",
+        "template engine",
+        "vscode extension",
+        "json",
+        "sql",
+        "dynamic data",
+        "code generation"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/hafizhanwafi/liquid-templating/issues"
+    },
     "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
+        "build": "node esbuild.config.js",
+        "build:prod": "node esbuild.config.js --prod",
+        "watch": "node esbuild.config.js --watch",
         "lint": "eslint src",
-        "test": "vscode-test"
+        "test": "vscode-test",
+        "package": "npm run build:prod && vsce package",
+        "publish": "npm run build:prod && vsce publish"
     },
     "devDependencies": {
+        "@types/glob-to-regexp": "^0.4.4",
         "@types/mocha": "^10.0.10",
+        "@types/mssql": "^9.1.7",
         "@types/node": "20.x",
         "@types/vscode": "^1.99.0",
         "@typescript-eslint/eslint-plugin": "^8.31.1",
         "@typescript-eslint/parser": "^8.31.1",
         "@vscode/test-cli": "^0.0.10",
         "@vscode/test-electron": "^2.5.2",
+        "ajv": "^8.17.1",
+        "ajv-errors": "^3.0.0",
+        "esbuild": "^0.25.4",
         "eslint": "^9.25.1",
-        "liquidjs": "^10.21.0",
+        "glob-to-regexp": "^0.4.1",
+        "msnodesqlv8": "^4.5.0",
+        "mssql": "^11.0.1",
         "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "liquidjs": "^10.21.0"
     }
 }
