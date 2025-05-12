@@ -2,7 +2,7 @@
 
 **Liquid Templating** is a Visual Studio Code extension that allows you to render templates using the [Liquid](https://shopify.github.io/liquid/) templating engine and JSON-based data sources. It also supports dynamic data generation using JavaScript and integration with Microsoft SQL Server.
 
-![Demo](https://raw.githubusercontent.com/hafizhanwafi/liquid-templating/refs/heads/main/media/demo.gif)
+![Demo](https://raw.githubusercontent.com/hafizhanwafi/liquid-templating-vscode/refs/heads/main/media/demo.gif)
 
 
 ## Features
