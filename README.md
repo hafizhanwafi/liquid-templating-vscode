@@ -4,6 +4,7 @@
 
 ![Demo](https://raw.githubusercontent.com/hafizhanwafi/liquid-templating/refs/heads/main/media/demo.gif)
 
+
 ## Features
 
 - Render `.liquid-template.*` files using data from `.liquid-data.json`.
